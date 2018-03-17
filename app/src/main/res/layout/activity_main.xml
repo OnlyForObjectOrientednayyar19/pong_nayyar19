@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ravin.pong_nayyar19.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <ravin.pong_nayyar19.AnimationSurface
+            android:id="@+id/animationSurface"
+            android:layout_width="match_parent"
+            android:layout_height="fill_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="1"></ravin.pong_nayyar19.AnimationSurface>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_weight="3"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/paddleSizeTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center_horizontal|center"
+                        android:layout_weight="1"
+                        android:foregroundGravity="center_vertical|center_horizontal|center"
+                        android:gravity="center_vertical|center_horizontal|center"
+                        android:text="Paddle Size"
+                        android:textSize="25sp" />
+
+                    <SeekBar
+                        android:id="@+id/paddleSizeSB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="6"
+                        android:foregroundGravity="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/ballSpeedTV"
+                        android:layout_width="127dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical|center_horizontal|center"
+                        android:layout_weight="1"
+                        android:foregroundGravity="center_vertical|center_horizontal|center"
+                        android:gravity="center_vertical|center_horizontal|center"
+                        android:text="Ball Speed"
+                        android:textSize="25sp" />
+
+                    <SeekBar
+                        android:id="@+id/ballSpeedSB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_weight="6"
+                        android:foregroundGravity="center_vertical|center" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/playerScorePlainText"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:foregroundGravity="center_vertical|center_horizontal|center"
+                        android:gravity="center_vertical|center_horizontal|center"
+                        android:text="Player Score:"
+                        android:textSize="50sp" />
+
+                    <TextView
+                        android:id="@+id/playerScoreTV"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:foregroundGravity="center_vertical|center_horizontal|center"
+                        android:gravity="center_vertical|center_horizontal|center"
+                        android:text="0"
+                        android:textSize="50sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/resetButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="20dp"
+                        android:layout_weight="1"
+                        android:text="Reset"
+                        android:textSize="25sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>
