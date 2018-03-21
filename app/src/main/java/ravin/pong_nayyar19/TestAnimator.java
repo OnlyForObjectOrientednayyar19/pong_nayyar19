@@ -10,6 +10,8 @@ import java.util.Random;
  * @author Nuxoll
  * @author Veghdal
  * @author Ravi Nayyar
+ *          nayyar19
+ *          nayyar19@up.edu
  * @version March 2018
  */
 public class TestAnimator implements Animator {
@@ -18,31 +20,24 @@ public class TestAnimator implements Animator {
     private int paddleSize;
     private int numX = 50; //Current xCoor of the ball
     private int numY = 50; //Current yCoor of the ball
-    private int wall_x;
-    private int wall_y;
-    int select = 0;
-    private boolean left2right = true;
-    private boolean top2bottom = true;
-
-    private static int playerScore;
-
+    private int wall_x; //Last X coordinate of the previous wall hit
+    private int wall_y; //Last Y coordinate of the previous wall hit
+    int select = 0;     //Used for the switch case
+    private boolean left2right = true; //was the ball going left to right
+    private boolean top2bottom = true; //was the ball going from top to bottom
+    private int playerScore;
     //Determines if the ball has missed the paddle, the reset button has been pressed, and the ball
     //needs to be placed in its initial XY location
-    private static boolean initialXY = true;
-
+    private boolean initialXY = true;
     //Determines if the ball is still bouncing
-    private static boolean isBallInPlay = true;
-    private static int speed = 10;
-    private static int sizeOffset;
+    private boolean isBallInPlay = true;
+    private int speed = 10;
+    private int sizeOffset;
     Paint bluePaint = new Paint();
-
-
-    Pong_Model pm = new Pong_Model();
+    int wallBoundry = 45;
 
 
     //Getters and Setters
-    public int getPaddleSize(){return paddleSize;}
-    public void setPaddleSize(int pSize){this.paddleSize = pSize;}
     public int getPlayerScore(){return playerScore;}
     public void setPlayerScore(int pScore){this.playerScore = this.playerScore+pScore;}
 
@@ -100,6 +95,13 @@ public class TestAnimator implements Animator {
     public void setInitialXY(boolean initialXY){this.initialXY = initialXY;}
     public boolean getInitialXY(){return this.initialXY;}
 
+
+    /**randomValue
+     *
+     * @param upperBound gives the upper bound of the random value
+     * @return returns the random value
+     */
+
     public int randomValue(int upperBound){
         Random r = new Random();
         if(initialXY){
@@ -126,17 +128,20 @@ public class TestAnimator implements Animator {
 
     /**
      * Action to perform on clock tick
-     *
+     * The tick method contains the code for everything that is shown on the screen
+     * It determines the bounce direction, bounce angle, paddle size, the physical drawing of the ball
      * @param g the graphics object on which to draw
      */
     public void tick(Canvas g) {
 
         bluePaint.setColor(Color.rgb(0,0,255));
-        int upperYpaddle = g.getHeight()/2-g.getHeight()/10-4*sizeOffset;
-        int lowerYpaddle = 600+4*sizeOffset;
+        int upperYpaddle = (int)(g.getHeight()/2-g.getHeight()/10-4.5*sizeOffset);
+        int lowerYpaddle = (int)(600+4.5*sizeOffset);
         g.drawRect((int)(g.getHeight()/4-g.getHeight()/5),upperYpaddle,0,lowerYpaddle,bluePaint);
 
         if(isBallInPlay) {
+            //Only active if it is the the first time starting the app or after the reset button
+            //has been pressed
             if (initialXY) {
                 numX = randomValue((g.getHeight() - 100));
                 numY = randomValue((g.getHeight() - 100));
@@ -148,7 +153,7 @@ public class TestAnimator implements Animator {
                  }
              }
              //if the ball hits the bottom wall
-            if (numY > (g.getHeight() - 25)) {
+            if (numY > (g.getHeight() - wallBoundry)) {
                 setLeft2Right(wall_x, numX);
                 if (left2right) {
                     select = 1;
@@ -158,7 +163,7 @@ public class TestAnimator implements Animator {
                 setLastWallCoor(numX, numY);
             }
             //if the ball hits the top wall
-            if (numY < 25) {
+            if (numY < wallBoundry) {
                 setLeft2Right(wall_x, numX);
                 if (left2right) {
                     select = 0;
@@ -168,7 +173,7 @@ public class TestAnimator implements Animator {
                 setLastWallCoor(numX, numY);
             }
             //if the ball hits the far right wall
-            if (numX > (g.getWidth() - 25)) {
+            if (numX > (g.getWidth() - wallBoundry)) {
                 setTop2botton(wall_y, numY);
                 if (top2bottom) {
                     select = 3;
@@ -179,7 +184,7 @@ public class TestAnimator implements Animator {
             }
             //if the ball hits the paddle
             int paddleWidth = (int) (g.getHeight() / 4 - g.getHeight() / 5);
-            if (numX < (paddleWidth + 25)) {
+            if (numX < (paddleWidth + wallBoundry)) {
                 if (numY < lowerYpaddle) {
                     if (numY > upperYpaddle) {
                         setTop2botton(wall_y, numY);
@@ -201,17 +206,9 @@ public class TestAnimator implements Animator {
                 select = 4;
                 isBallInPlay = false;
             }
-        }//if isBallinPlay
-            /*
-            //FOR DEBUGGING PURPOSES ONLY!!!
-            //REMOVE WHEN FINISHED TESTING FULL FUNCTIONALITY OF BOUNCE CASES
-            if(numX<(25)){
-                setTop2botton(wall_y,numY);
-                if(top2botton){select = 0;}
-                else{select = 1;}
-                setLastWallCoor(numX,numY);
-            }
-            */
+        }//if isBallisInPlay
+
+        //Switch statement determines the the slope of the ball's trajectory
         int rAngle = randomValue(10);
         if(rAngle>getSpeed()){rAngle =0;}
         switch (select){
@@ -236,7 +233,7 @@ public class TestAnimator implements Animator {
         // Draw the ball in the correct position.
         Paint redPaint = new Paint();
         redPaint.setColor(Color.RED);
-        g.drawCircle(numX, numY, 30, redPaint);
+        g.drawCircle(numX, numY, 30,redPaint);
     }
 
     /**
